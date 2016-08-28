@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.khigio234.pc.core.BR;
 import com.khigio234.pc.core.model.entities.Restaurant;
+import com.khigio234.pc.core.model.services.clouds.RestaurantCloudService;
 import com.khigio234.pc.core.model.services.storages.RestaurantStorageService;
 import com.khigio234.pc.core.view.ICallback;
 import com.khigio234.pc.core.view.INavigator;
@@ -23,6 +24,8 @@ public class RestaurantViewModel extends BaseViewModel {
     private List<Restaurant> mRestaurants;
 
     private RestaurantStorageService mRestaurantStorageService;
+
+    private RestaurantCloudService mRestaurantCloudService;
 
     //endregion
 
@@ -43,10 +46,21 @@ public class RestaurantViewModel extends BaseViewModel {
 
     //region Constructor
 
+    /*
+        Storage
+     */
     public RestaurantViewModel(INavigator navigator, RestaurantStorageService restaurantStorageService) {
         super(navigator);
         mRestaurantStorageService = restaurantStorageService;
     }
+
+    /*
+        Cloud
+     */
+//    public RestaurantViewModel(INavigator navigator, RestaurantCloudService restaurantCloudService) {
+//        super(navigator);
+//        mRestaurantCloudService = restaurantCloudService;
+//    }
 
     protected RestaurantViewModel() {
         super();

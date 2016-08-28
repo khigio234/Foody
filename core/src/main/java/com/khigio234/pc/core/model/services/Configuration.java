@@ -13,5 +13,7 @@ public class Configuration {
 
     //endregion
 
-    public static final String API_URL = "";
+    public static final String FOODY_API_URL = "";
+
+    public static final String TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
 }
