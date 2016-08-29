@@ -94,6 +94,8 @@ public class App extends BaseApplication{
 
         restaurants.add(new Restaurant(1, "Công Vinh", "34 Âu Cơ, Hòa Khánh, Liên Chiểu", "7:00 AM", "10:30 PM", "01206145258", "1.png", "Nơi tụ hội của Team Công Vinh", new Date(123456),new Date(234567),new Date(345678), false));
         restaurants.add(new Restaurant(2, "Meo Meo", "55 Ngô Thì Nhậm, Hòa Khánh, Liên Chiểu", "7:00 AM", "10:30 PM", "01206145258", "1.png", "Nơi tụ hội của Team Công Vinh", new Date(123456),new Date(234567),new Date(345678), false));
+        restaurants.add(new Restaurant(3, "Muối Ớt", "34 Âu Cơ, Hòa Khánh, Liên Chiểu", "7:00 AM", "10:30 PM", "01206145258", "1.png", "Nơi tụ hội của Team Công Vinh", new Date(123456),new Date(234567),new Date(345678), false));
+        restaurants.add(new Restaurant(4, "Phong Phú", "55 Ngô Thì Nhậm, Hòa Khánh, Liên Chiểu", "7:00 AM", "10:30 PM", "01206145258", "1.png", "Nơi tụ hội của Team Công Vinh", new Date(123456),new Date(234567),new Date(345678), false));
 
         new RestaurantStorageService(Realm.getDefaultInstance()).saveRestaurants(restaurants, new ICallback<Boolean>() {
             @Override
