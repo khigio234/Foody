@@ -85,7 +85,7 @@
             android:layout_marginBottom="24dp"
             android:text="Đã có tài khoản? Đăng nhập ngay"
             android:gravity="center"
-            android:textSize="16dip"/>
+            android:textSize="16sp"/>
 
     </LinearLayout>
 

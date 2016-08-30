@@ -57,8 +57,10 @@
                         android:textSize="13sp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_below="@+id/tv_restaurant_name"
                         android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:text="@{restaurant.address}"/>
 
                 </RelativeLayout>
@@ -97,8 +99,8 @@
                             android:id="@+id/img_save_restaurant"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
                             android:layout_marginLeft="5dp"
-                            android:layout_alignParentLeft="true"
                             android:src="@drawable/ic_save"
                             android:layout_gravity="center"/>
 
@@ -116,7 +118,8 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_comment"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="26dp"/>
+                            android:layout_marginLeft="26dp"
+                            android:layout_marginStart="26dp"/>
 
                         <TextView
                             android:id="@+id/tv_comment_restaurant"
@@ -132,8 +135,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
                         android:layout_marginTop="-2dp"
                         android:src="@drawable/ic_3_dots"/>
 

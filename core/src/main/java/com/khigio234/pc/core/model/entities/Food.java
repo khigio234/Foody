@@ -30,9 +30,6 @@ public class Food extends RealmObject {
     @SerializedName("category_id")
     private int mCategoryId;
 
-    @SerializedName("auth_id")
-    private int mUserId;
-
     @SerializedName("created_at")
     private Date mCreatedAt;
 
@@ -44,6 +41,9 @@ public class Food extends RealmObject {
 
     @SerializedName("is_deleted")
     private boolean mIsDeleted;
+
+    @SerializedName("restaurant_id")
+    private String mRestaurantId;
 
     //endregion
 
@@ -79,14 +79,6 @@ public class Food extends RealmObject {
 
     public void setCategoryId(int categoryId) {
         mCategoryId = categoryId;
-    }
-
-    public int getUserId() {
-        return mUserId;
-    }
-
-    public void setUserId(int userId) {
-        mUserId = userId;
     }
 
     public int getId() {
@@ -127,6 +119,14 @@ public class Food extends RealmObject {
 
     public void setDeleted(boolean deleted) {
         mIsDeleted = deleted;
+    }
+
+    public String getRestaurantId() {
+        return mRestaurantId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        mRestaurantId = restaurantId;
     }
 
     //endregion
