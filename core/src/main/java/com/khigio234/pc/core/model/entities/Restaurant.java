@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -24,11 +25,11 @@ public class Restaurant extends RealmObject {
     @SerializedName("address")
     private String mAddress;
 
-    @SerializedName("opened_time")
-    private String mOpenedTime;
+    @SerializedName("open_time")
+    private String mOpenTime;
 
-    @SerializedName("closed_time")
-    private String mClosedTime;
+    @SerializedName("close_time")
+    private String mCloseTime;
 
     @SerializedName("category_id")
     private int mCategoryId;
@@ -48,11 +49,14 @@ public class Restaurant extends RealmObject {
     @SerializedName("updated_at")
     private Date mUpdatedAt;
 
-    @SerializedName("delete_at")
+    @SerializedName("deleted_at")
     private Date mDeletedAt;
 
-    @SerializedName("is_deleted")
-    private boolean mIsDeleted;
+    @SerializedName("comments")
+    private RealmList<Comment> mComments;
+
+    @SerializedName("category")
+    private Category mCategory;
 
     //endregion
 
@@ -82,20 +86,20 @@ public class Restaurant extends RealmObject {
         mAddress = address;
     }
 
-    public String getOpenedTime() {
-        return mOpenedTime;
+    public String getOpenTime() {
+        return mOpenTime;
     }
 
-    public void setOpenedTime(String openedTime) {
-        mOpenedTime = openedTime;
+    public void setOpenTime(String openTime) {
+        mOpenTime = openTime;
     }
 
-    public String getClosedTime() {
-        return mClosedTime;
+    public String getCloseTime() {
+        return mCloseTime;
     }
 
-    public void setClosedTime(String closedTime) {
-        mClosedTime = closedTime;
+    public void setCloseTime(String closeTime) {
+        mCloseTime = closeTime;
     }
 
     public int getCategoryId() {
@@ -154,12 +158,20 @@ public class Restaurant extends RealmObject {
         mDeletedAt = deletedAt;
     }
 
-    public boolean isDeleted() {
-        return mIsDeleted;
+    public RealmList<Comment> getComments() {
+        return mComments;
     }
 
-    public void setDeleted(boolean deleted) {
-        mIsDeleted = deleted;
+    public void setComments(RealmList<Comment> comments) {
+        mComments = comments;
+    }
+
+    public Category getCategory() {
+        return mCategory;
+    }
+
+    public void setCategory(Category category) {
+        mCategory = category;
     }
 
     //endregion
@@ -171,20 +183,6 @@ public class Restaurant extends RealmObject {
         super();
     }
 
-    public Restaurant(int id, String name, String address, String openedTime, String closedTime, String phoneNumber, String image, String content, Date createdAt, Date updatedAt, Date deletedAt, boolean isDeleted) {
-        mId = id;
-        mName = name;
-        mAddress = address;
-        mOpenedTime = openedTime;
-        mClosedTime = closedTime;
-        mPhoneNumber = phoneNumber;
-        mImage = image;
-        mContent = content;
-        mCreatedAt = createdAt;
-        mUpdatedAt = updatedAt;
-        mDeletedAt = deletedAt;
-        mIsDeleted = isDeleted;
-    }
 
     //endregion
 
@@ -196,11 +194,15 @@ public class Restaurant extends RealmObject {
                 "mId=" + mId +
                 ", mName='" + mName + '\'' +
                 ", mAddress='" + mAddress + '\'' +
-                ", mOpenedTime='" + mOpenedTime + '\'' +
-                ", mClosedTime='" + mClosedTime + '\'' +
+                ", mOpenTime='" + mOpenTime + '\'' +
+                ", mCloseTime='" + mCloseTime + '\'' +
+                ", mCategoryId=" + mCategoryId +
                 ", mPhoneNumber='" + mPhoneNumber + '\'' +
                 ", mImage='" + mImage + '\'' +
                 ", mContent='" + mContent + '\'' +
+                ", mCreatedAt=" + mCreatedAt +
+                ", mUpdatedAt=" + mUpdatedAt +
+                ", mDeletedAt=" + mDeletedAt +
                 '}';
     }
 

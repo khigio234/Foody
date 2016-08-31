@@ -2,6 +2,8 @@ package com.khigio234.pc.core.model.responses;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 /**
  * Created by PC on 8/1/2016.
  */
@@ -17,6 +19,9 @@ public class APIResponse<E> {
 
     @SerializedName("message")
     private String mMessage;
+
+    @SerializedName("last_sync_timestamp")
+    private Date mLastSyncTimestamp;
 
     //endregion
 
@@ -46,6 +51,16 @@ public class APIResponse<E> {
         mData = data;
     }
 
+    public Date getLastSyncTimestamp() {
+        return mLastSyncTimestamp;
+    }
+
+    public void setLastSyncTimestamp(Date lastSyncTimestamp) {
+        mLastSyncTimestamp = lastSyncTimestamp;
+    }
+
     //endregion
+
+    //region Override method
 
 }

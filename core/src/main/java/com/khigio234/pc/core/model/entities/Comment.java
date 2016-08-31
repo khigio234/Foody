@@ -34,7 +34,7 @@ public class Comment extends RealmObject {
     private Date mDeletedAt;
 
     @SerializedName("commenter")
-    private String mCommenter;
+    private User mCommenter;
 
     //endregion
 
@@ -88,11 +88,11 @@ public class Comment extends RealmObject {
         mDeletedAt = deletedAt;
     }
 
-    public String getCommenter() {
+    public User getCommenter() {
         return mCommenter;
     }
 
-    public void setCommenter(String commenter) {
+    public void setCommenter(User commenter) {
         mCommenter = commenter;
     }
 

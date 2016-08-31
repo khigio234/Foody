@@ -33,14 +33,23 @@ public class RestaurantCloudService extends BaseCloudService<IRestaurantCloudSer
         getICloudService().getAllRestaurants().enqueue(new Callback<APIResponse<List<Restaurant>>>() {
             @Override
             public void onResponse(Call<APIResponse<List<Restaurant>>> call, Response<APIResponse<List<Restaurant>>> response) {
-                APIResponse<List<Restaurant>> apiResponse = response.body();
-                if (apiResponse.isSuccess()) {
-                    callback.onResult(apiResponse.getData());
+                if (response.isSuccessful()){
+                    APIResponse<List<Restaurant>> apiResponse = response.body();
+                    if (apiResponse.isSuccess()) {
+                        callback.onResult(apiResponse.getData());
 
-                    Log.d("TAG", apiResponse.getData().get(0).toString());
-                } else {
-                    Log.d("TAG", apiResponse.getMessage());
+                        Log.d("TAG", apiResponse.getData().get(0).toString());
+                    } else {
+                        Log.d("TAG", apiResponse.getMessage());
+                    }
                 }
+                else {
+
+                    Log.d("TAG", response.message());
+                    Log.d("TAG", "ERROR GET ALL RESTAURANTS");
+                    Log.d("TAG", response.raw().toString());
+                }
+
             }
 
             @Override

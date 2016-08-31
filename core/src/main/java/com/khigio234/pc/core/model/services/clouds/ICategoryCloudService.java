@@ -13,6 +13,6 @@ import retrofit2.http.GET;
  */
 public interface ICategoryCloudService {
 
-    @GET("/api/v1/categories")
+    @GET("/foody_api_son/api/v1/categories")
     Call<APIResponse<List<Category>>> getAllCategories();
 }

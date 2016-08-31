@@ -10,7 +10,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * Created by PC on 8/1/2016.
  */
-public class Category extends RealmObject{
+public class Category extends RealmObject {
 
     //region Properties
 
@@ -30,11 +30,8 @@ public class Category extends RealmObject{
     @SerializedName("updated_at")
     private Date mUpdatedAt;
 
-    @SerializedName("delete_at")
+    @SerializedName("deleted_at")
     private Date mDeletedAt;
-
-    @SerializedName("is_deleted")
-    private boolean mIsDeleted;
 
     //endregion
 
@@ -88,14 +85,6 @@ public class Category extends RealmObject{
         mDeletedAt = deletedAt;
     }
 
-    public boolean isDeleted() {
-        return mIsDeleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        mIsDeleted = deleted;
-    }
-
     //endregion
 
     //region Constructor
@@ -105,14 +94,13 @@ public class Category extends RealmObject{
         super();
     }
 
-    public Category(int id, String name, String image, Date createdAt, Date updatedAt, Date deletedAt, boolean isDeleted) {
+    public Category(int id, String name, String image, Date createdAt, Date updatedAt, Date deletedAt) {
         mId = id;
         mName = name;
         mImage = image;
         mCreatedAt = createdAt;
         mUpdatedAt = updatedAt;
         mDeletedAt = deletedAt;
-        mIsDeleted = isDeleted;
     }
 
     //endregion
@@ -128,7 +116,6 @@ public class Category extends RealmObject{
                 ", mCreatedAt=" + mCreatedAt +
                 ", mUpdatedAt=" + mUpdatedAt +
                 ", mDeletedAt=" + mDeletedAt +
-                ", mIsDeleted=" + mIsDeleted +
                 '}';
     }
 

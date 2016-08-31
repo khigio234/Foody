@@ -3,6 +3,8 @@ package com.khigio234.pc.core.di;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.khigio234.pc.core.model.services.Configuration;
+import com.khigio234.pc.core.model.services.clouds.CategoryCloudService;
+import com.khigio234.pc.core.model.services.clouds.ICategoryCloudService;
 import com.khigio234.pc.core.model.services.clouds.IRestaurantCloudService;
 import com.khigio234.pc.core.model.services.clouds.RestaurantCloudService;
 
@@ -37,8 +39,27 @@ public class CloudModule {
 
     @Provides
     @Singleton
+    public ICategoryCloudService providesCategoryService() {
+        Gson gson = createGson();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Configuration.FOODY_API_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        return retrofit.create(ICategoryCloudService.class);
+    }
+
+    @Provides
+    @Singleton
     public RestaurantCloudService providesRestaurantCloudService(IRestaurantCloudService iRestaurantCloudService) {
         return new RestaurantCloudService(iRestaurantCloudService);
+    }
+
+    @Provides
+    @Singleton
+    public CategoryCloudService providesCategoryCloudService(ICategoryCloudService iCategoryCloudService) {
+        return new CategoryCloudService(iCategoryCloudService);
     }
 
     //endregion

@@ -22,13 +22,14 @@ public class Constants {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
-            MAIN_PAGE, LOGIN_PAGE
+            MAIN_PAGE, LOGIN_PAGE, REGISTER_PAGE
     })
 
     public @interface PageKey {}
 
     public static final int MAIN_PAGE = 0;
     public static final int LOGIN_PAGE = 1;
+    public static final int REGISTER_PAGE = 2;
 
     //endregion
 }

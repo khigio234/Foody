@@ -15,7 +15,6 @@ import com.khigio234.pc.core.view.INavigator;
 import com.khigio234.pc.foody.activities.MainActivity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -64,18 +63,6 @@ public class App extends BaseApplication{
     private void initCategories() {
         List<Category> categories = new ArrayList<>();
 
-        categories.add(new Category(1,"Sang trọng","1.png",new Date(123456),new Date(234567),new Date(345678), false));
-        categories.add(new Category(2,"Buffet","1.png",new Date(123456),new Date(234567),new Date(345678), false));
-        categories.add(new Category(3,"Nhà hàng","1.png",new Date(123456),new Date(234567),new Date(345678), false));
-        categories.add(new Category(4,"Ăn vặt/vỉa hè","1.png",new Date(123456),new Date(234567),new Date(345678), false));
-        categories.add(new Category(5,"Ăn chay","1.png",new Date(123456),new Date(234567),new Date(345678), false));
-        categories.add(new Category(6,"Cafe/Dessert","1.png",new Date(123456),new Date(234567),new Date(345678), false));
-        categories.add(new Category(7,"Quán ăn","1.png",new Date(123456),new Date(234567),new Date(345678), false));
-        categories.add(new Category(8,"Bar/Pub","1.png",new Date(123456),new Date(234567),new Date(345678), false));
-        categories.add(new Category(9,"Quán nhậu","1.png",new Date(123456),new Date(234567),new Date(345678), false));
-        categories.add(new Category(10,"Beer club","1.png",new Date(123456),new Date(234567),new Date(345678), false));
-
-
         new CategoryStorageService(Realm.getDefaultInstance()).saveCategories(categories, new ICallback<Boolean>() {
             @Override
             public void onResult(Boolean result) {
@@ -91,11 +78,6 @@ public class App extends BaseApplication{
 
     private void initRestaurants() {
         List<Restaurant> restaurants = new ArrayList<>();
-
-        restaurants.add(new Restaurant(1, "Công Vinh", "34 Âu Cơ, Hòa Khánh, Liên Chiểu", "7:00 AM", "10:30 PM", "01206145258", "1.png", "Nơi tụ hội của Team Công Vinh", new Date(123456),new Date(234567),new Date(345678), false));
-        restaurants.add(new Restaurant(2, "Meo Meo", "55 Ngô Thì Nhậm, Hòa Khánh, Liên Chiểu", "7:00 AM", "10:30 PM", "01206145258", "1.png", "Nơi tụ hội của Team Công Vinh", new Date(123456),new Date(234567),new Date(345678), false));
-        restaurants.add(new Restaurant(3, "Muối Ớt", "34 Âu Cơ, Hòa Khánh, Liên Chiểu", "7:00 AM", "10:30 PM", "01206145258", "1.png", "Nơi tụ hội của Team Công Vinh", new Date(123456),new Date(234567),new Date(345678), false));
-        restaurants.add(new Restaurant(4, "Phong Phú", "55 Ngô Thì Nhậm, Hòa Khánh, Liên Chiểu", "7:00 AM", "10:30 PM", "01206145258", "1.png", "Nơi tụ hội của Team Công Vinh", new Date(123456),new Date(234567),new Date(345678), false));
 
         new RestaurantStorageService(Realm.getDefaultInstance()).saveRestaurants(restaurants, new ICallback<Boolean>() {
             @Override

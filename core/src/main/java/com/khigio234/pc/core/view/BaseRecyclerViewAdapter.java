@@ -29,6 +29,9 @@ public abstract class BaseRecyclerViewAdapter <V extends BaseViewModel, T> exten
         notifyDataSetChanged();
     }
 
+    public T getData() {
+        return mData;
+    }
 
     //endregion
 

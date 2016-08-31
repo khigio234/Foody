@@ -71,7 +71,7 @@ public abstract class BaseViewModel extends BaseObservable implements IViewModel
 
     @Override
     public void onDestroy() {
-        mEventBus = null;
+
     }
 
     //endregion

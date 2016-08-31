@@ -49,18 +49,18 @@ public class RestaurantViewModel extends BaseViewModel {
     /*
         Storage
      */
-    public RestaurantViewModel(INavigator navigator, RestaurantStorageService restaurantStorageService) {
-        super(navigator);
-        mRestaurantStorageService = restaurantStorageService;
-    }
+//    public RestaurantViewModel(INavigator navigator, RestaurantStorageService restaurantStorageService) {
+//        super(navigator);
+//        mRestaurantStorageService = restaurantStorageService;
+//    }
 
     /*
         Cloud
      */
-//    public RestaurantViewModel(INavigator navigator, RestaurantCloudService restaurantCloudService) {
-//        super(navigator);
-//        mRestaurantCloudService = restaurantCloudService;
-//    }
+    public RestaurantViewModel(INavigator navigator, RestaurantCloudService restaurantCloudService) {
+        super(navigator);
+        mRestaurantCloudService = restaurantCloudService;
+    }
 
     protected RestaurantViewModel() {
         super();
@@ -96,7 +96,7 @@ public class RestaurantViewModel extends BaseViewModel {
 
     private void loadRestaurant() {
         Log.d("cc","ccc");
-        mRestaurantStorageService.getAllRestaurants(new ICallback<List<Restaurant>>() {
+        mRestaurantCloudService.getAllRestaurants(new ICallback<List<Restaurant>>() {
             @Override
             public void onResult(List<Restaurant> result) {
                 Log.d(TAG, "Load Restaurant");

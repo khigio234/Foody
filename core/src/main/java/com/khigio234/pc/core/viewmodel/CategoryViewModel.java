@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.khigio234.pc.core.BR;
 import com.khigio234.pc.core.model.entities.Category;
+import com.khigio234.pc.core.model.services.clouds.CategoryCloudService;
 import com.khigio234.pc.core.model.services.storages.CategoryStorageService;
 import com.khigio234.pc.core.view.ICallback;
 import com.khigio234.pc.core.view.INavigator;
@@ -23,6 +24,8 @@ public class CategoryViewModel extends BaseViewModel{
     private List<Category> mCategories;
 
     private CategoryStorageService mCategoryStorageService;
+
+    private CategoryCloudService mCategoryCloudService;
 
     //endregion
 
@@ -47,10 +50,10 @@ public class CategoryViewModel extends BaseViewModel{
     /**
      * @param navigator Navigate controller.
      */
-    public CategoryViewModel(INavigator navigator, CategoryStorageService storageService) {
+    public CategoryViewModel(INavigator navigator, CategoryCloudService cloudService) {
         super(navigator);
 
-        mCategoryStorageService = storageService;
+        mCategoryCloudService = cloudService;
     }
 
     protected CategoryViewModel() {
@@ -91,7 +94,7 @@ public class CategoryViewModel extends BaseViewModel{
     //region Private methods
 
     private void loadCategory(){
-        mCategoryStorageService.getAllCategories(new ICallback<List<Category>>() {
+        mCategoryCloudService.getAllCategories(new ICallback<List<Category>>() {
             @Override
             public void onResult(List<Category> result) {
                 Log.d(TAG, "DONE");

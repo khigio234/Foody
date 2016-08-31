@@ -1,7 +1,7 @@
 package com.khigio234.pc.core.di;
 
-import com.khigio234.pc.core.model.services.storages.CategoryStorageService;
-import com.khigio234.pc.core.model.services.storages.RestaurantStorageService;
+import com.khigio234.pc.core.model.services.clouds.CategoryCloudService;
+import com.khigio234.pc.core.model.services.clouds.RestaurantCloudService;
 import com.khigio234.pc.core.view.INavigator;
 import com.khigio234.pc.core.viewmodel.CategoryViewModel;
 import com.khigio234.pc.core.viewmodel.MainViewModel;
@@ -29,14 +29,14 @@ public class ViewModelModule {
 
     @Provides
     @Singleton
-    public CategoryViewModel providesCategoryViewModel(INavigator navigator, CategoryStorageService categoryStorageService) {
-        return new CategoryViewModel(navigator, categoryStorageService);
+    public CategoryViewModel providesCategoryViewModel(INavigator navigator, CategoryCloudService categoryCloudService) {
+        return new CategoryViewModel(navigator, categoryCloudService);
     }
 
     @Provides
     @Singleton
-    public RestaurantViewModel providesRestaurantViewModel(INavigator navigator, RestaurantStorageService restaurantStorageService) {
-        return new RestaurantViewModel(navigator, restaurantStorageService);
+    public RestaurantViewModel providesRestaurantViewModel(INavigator navigator, RestaurantCloudService restaurantCloudService) {
+        return new RestaurantViewModel(navigator, restaurantCloudService);
     }
 
     //endregion

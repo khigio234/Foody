@@ -13,6 +13,6 @@ import retrofit2.http.GET;
  */
 public interface IRestaurantCloudService {
 
-    @GET("/api/v1/restaurants")
+    @GET("/foody_api_son/api/v1/restaurants")
     Call<APIResponse<List<Restaurant>>> getAllRestaurants();
 }

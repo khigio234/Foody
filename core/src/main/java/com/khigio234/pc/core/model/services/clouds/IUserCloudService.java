@@ -11,6 +11,6 @@ import retrofit2.http.Query;
  */
 public interface IUserCloudService {
 
-    @GET("/logIn")
+    @GET("/foody_api_son/logIn")
     Call<User> logIn(@Query("username")String username, @Query("password")String password);
 }
