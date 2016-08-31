@@ -1,7 +1,7 @@
 package com.khigio234.pc.core.model.services.storages;
 
 import com.khigio234.pc.core.model.entities.Restaurant;
-import com.khigio234.pc.core.model.services.IRestaurantService;
+import com.khigio234.pc.core.model.services.clouds.IRestaurantService;
 import com.khigio234.pc.core.view.ICallback;
 
 import java.util.List;

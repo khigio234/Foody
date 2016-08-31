@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.khigio234.pc.core.model.services.Configuration;
 import com.khigio234.pc.core.model.services.clouds.CategoryCloudService;
 import com.khigio234.pc.core.model.services.clouds.ICategoryCloudService;
-import com.khigio234.pc.core.model.services.clouds.IRestaurantCloudService;
 import com.khigio234.pc.core.model.services.clouds.RestaurantCloudService;
 
 import javax.inject.Singleton;
