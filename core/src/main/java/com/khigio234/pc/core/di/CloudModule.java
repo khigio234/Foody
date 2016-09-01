@@ -4,7 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.khigio234.pc.core.model.services.Configuration;
 import com.khigio234.pc.core.model.services.clouds.CategoryCloudService;
-import com.khigio234.pc.core.model.services.clouds.ICategoryCloudService;
+import com.khigio234.pc.core.model.services.clouds.ICategoryService;
+import com.khigio234.pc.core.model.services.clouds.IRestaurantService;
 import com.khigio234.pc.core.model.services.clouds.RestaurantCloudService;
 
 import javax.inject.Singleton;
@@ -25,7 +26,7 @@ public class CloudModule {
 
     @Provides
     @Singleton
-    public IRestaurantCloudService providesRestaurantService() {
+    public IRestaurantService providesRestaurantService() {
         Gson gson = createGson();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -33,12 +34,12 @@ public class CloudModule {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        return retrofit.create(IRestaurantCloudService.class);
+        return retrofit.create(IRestaurantService.class);
     }
 
     @Provides
     @Singleton
-    public ICategoryCloudService providesCategoryService() {
+    public ICategoryService providesCategoryService() {
         Gson gson = createGson();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -46,19 +47,19 @@ public class CloudModule {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        return retrofit.create(ICategoryCloudService.class);
+        return retrofit.create(ICategoryService.class);
     }
 
     @Provides
     @Singleton
-    public RestaurantCloudService providesRestaurantCloudService(IRestaurantCloudService iRestaurantCloudService) {
-        return new RestaurantCloudService(iRestaurantCloudService);
+    public RestaurantCloudService providesRestaurantCloudService(IRestaurantService iRestaurantService) {
+        return new RestaurantCloudService(iRestaurantService);
     }
 
     @Provides
     @Singleton
-    public CategoryCloudService providesCategoryCloudService(ICategoryCloudService iCategoryCloudService) {
-        return new CategoryCloudService(iCategoryCloudService);
+    public CategoryCloudService providesCategoryCloudService(ICategoryService iCategoryService) {
+        return new CategoryCloudService(iCategoryService);
     }
 
     //endregion

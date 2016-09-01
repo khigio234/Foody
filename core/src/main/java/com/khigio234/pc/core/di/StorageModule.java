@@ -1,8 +1,5 @@
 package com.khigio234.pc.core.di;
 
-import com.khigio234.pc.core.model.services.storages.CategoryStorageService;
-import com.khigio234.pc.core.model.services.storages.RestaurantStorageService;
-
 import javax.inject.Singleton;
 
 import dagger.Module;

@@ -6,8 +6,6 @@ import com.khigio234.pc.core.di.StorageModule;
 import com.khigio234.pc.core.di.ViewModelModule;
 import com.khigio234.pc.core.model.entities.Category;
 import com.khigio234.pc.core.model.entities.Restaurant;
-import com.khigio234.pc.core.model.services.storages.CategoryStorageService;
-import com.khigio234.pc.core.model.services.storages.RestaurantStorageService;
 import com.khigio234.pc.core.view.BaseApplication;
 import com.khigio234.pc.core.view.Constants;
 import com.khigio234.pc.core.view.ICallback;

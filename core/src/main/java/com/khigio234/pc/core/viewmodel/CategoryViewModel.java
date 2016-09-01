@@ -6,7 +6,6 @@ import android.util.Log;
 import com.khigio234.pc.core.BR;
 import com.khigio234.pc.core.model.entities.Category;
 import com.khigio234.pc.core.model.services.clouds.CategoryCloudService;
-import com.khigio234.pc.core.model.services.storages.CategoryStorageService;
 import com.khigio234.pc.core.view.ICallback;
 import com.khigio234.pc.core.view.INavigator;
 

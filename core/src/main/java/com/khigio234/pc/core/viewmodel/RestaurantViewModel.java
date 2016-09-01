@@ -6,7 +6,7 @@ import android.util.Log;
 import com.khigio234.pc.core.BR;
 import com.khigio234.pc.core.model.entities.Restaurant;
 import com.khigio234.pc.core.model.services.clouds.RestaurantCloudService;
-import com.khigio234.pc.core.model.services.storages.RestaurantStorageService;
+import com.khigio234.pc.core.model.services.storages.RestaurantModel;
 import com.khigio234.pc.core.view.ICallback;
 import com.khigio234.pc.core.view.INavigator;
 
@@ -23,7 +23,7 @@ public class RestaurantViewModel extends BaseViewModel {
 
     private List<Restaurant> mRestaurants;
 
-    private RestaurantStorageService mRestaurantStorageService;
+    private RestaurantModel mRestaurantModel;
 
     private RestaurantCloudService mRestaurantCloudService;
 

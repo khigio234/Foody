@@ -1,5 +1,9 @@
 package com.khigio234.pc.core.viewmodel;
 
+import android.databinding.Bindable;
+
+import com.khigio234.pc.core.BR;
+import com.khigio234.pc.core.model.entities.User;
 import com.khigio234.pc.core.view.INavigator;
 
 import org.greenrobot.eventbus.EventBus;
@@ -8,6 +12,14 @@ import org.greenrobot.eventbus.EventBus;
  * Created by PC on 8/2/2016.
  */
 public class MainViewModel extends BaseViewModel{
+
+    //region Properties
+
+    private static final String TAG = "MainViewModel";
+
+    private User mUser;
+
+    //endregion
 
     //region Constructor
 
@@ -29,6 +41,17 @@ public class MainViewModel extends BaseViewModel{
         return super.getEventBus();
     }
 
+    @Bindable
+    public User getUser() {
+        return mUser;
+    }
+
+    public void setUser(User user) {
+        mUser = user;
+
+        notifyPropertyChanged(BR.user);
+    }
+
     //endregion
 
     //region Lifecycle
@@ -36,6 +59,8 @@ public class MainViewModel extends BaseViewModel{
     @Override
     public void onCreate() {
         super.onCreate();
+
+        getEventBus().register(this);
     }
 
     @Override
@@ -51,6 +76,8 @@ public class MainViewModel extends BaseViewModel{
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        getEventBus().unregister(this);
     }
 
 
