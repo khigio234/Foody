@@ -1,5 +1,8 @@
 package com.khigio234.pc.core.di;
 
+import com.khigio234.pc.core.model.services.storages.CategoryModel;
+import com.khigio234.pc.core.model.services.storages.RestaurantModel;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -23,14 +26,14 @@ public class StorageModule {
 
     @Provides
     @Singleton
-    public CategoryStorageService providesCategoryStorageService(Realm realm) {
-        return new CategoryStorageService(realm);
+    public CategoryModel providesCategoryStorageService(Realm realm) {
+        return new CategoryModel(realm);
     }
 
     @Provides
     @Singleton
-    public RestaurantStorageService providesRestaurantStorageService(Realm realm) {
-        return new RestaurantStorageService(realm);
+    public RestaurantModel providesRestaurantStorageService(Realm realm) {
+        return new RestaurantModel(realm);
     }
 
     //endregion

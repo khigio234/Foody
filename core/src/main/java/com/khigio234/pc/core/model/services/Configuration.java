@@ -3,7 +3,7 @@ package com.khigio234.pc.core.model.services;
 /**
  * Created by PC on 8/1/2016.
  */
-public class Configuration {
+public final class Configuration {
 
     //region Constructors
 

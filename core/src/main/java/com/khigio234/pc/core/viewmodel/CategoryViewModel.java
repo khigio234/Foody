@@ -6,6 +6,7 @@ import android.util.Log;
 import com.khigio234.pc.core.BR;
 import com.khigio234.pc.core.model.entities.Category;
 import com.khigio234.pc.core.model.services.clouds.CategoryCloudService;
+import com.khigio234.pc.core.model.services.storages.CategoryModel;
 import com.khigio234.pc.core.view.ICallback;
 import com.khigio234.pc.core.view.INavigator;
 
@@ -22,7 +23,7 @@ public class CategoryViewModel extends BaseViewModel{
 
     private List<Category> mCategories;
 
-    private CategoryStorageService mCategoryStorageService;
+    private CategoryModel mCategoryModel;
 
     private CategoryCloudService mCategoryCloudService;
 
@@ -49,10 +50,11 @@ public class CategoryViewModel extends BaseViewModel{
     /**
      * @param navigator Navigate controller.
      */
-    public CategoryViewModel(INavigator navigator, CategoryCloudService cloudService) {
+    public CategoryViewModel(INavigator navigator, CategoryCloudService cloudService, CategoryModel categoryModel) {
         super(navigator);
 
         mCategoryCloudService = cloudService;
+        mCategoryModel = categoryModel;
     }
 
     protected CategoryViewModel() {

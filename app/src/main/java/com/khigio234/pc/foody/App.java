@@ -4,18 +4,10 @@ import com.khigio234.pc.core.di.AppModule;
 import com.khigio234.pc.core.di.CloudModule;
 import com.khigio234.pc.core.di.StorageModule;
 import com.khigio234.pc.core.di.ViewModelModule;
-import com.khigio234.pc.core.model.entities.Category;
-import com.khigio234.pc.core.model.entities.Restaurant;
 import com.khigio234.pc.core.view.BaseApplication;
 import com.khigio234.pc.core.view.Constants;
-import com.khigio234.pc.core.view.ICallback;
 import com.khigio234.pc.core.view.INavigator;
 import com.khigio234.pc.foody.activities.MainActivity;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.realm.Realm;
 
 /**
  * Created by PC on 8/2/2016.
@@ -54,40 +46,6 @@ public class App extends BaseApplication{
                 .viewModelModule(new ViewModelModule())
                 .build();
 
-        initCategories();
-        initRestaurants();
-    }
-
-    private void initCategories() {
-        List<Category> categories = new ArrayList<>();
-
-        new CategoryStorageService(Realm.getDefaultInstance()).saveCategories(categories, new ICallback<Boolean>() {
-            @Override
-            public void onResult(Boolean result) {
-
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
-    }
-
-    private void initRestaurants() {
-        List<Restaurant> restaurants = new ArrayList<>();
-
-        new RestaurantStorageService(Realm.getDefaultInstance()).saveRestaurants(restaurants, new ICallback<Boolean>() {
-            @Override
-            public void onResult(Boolean result) {
-
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
     }
 
     //endregion
