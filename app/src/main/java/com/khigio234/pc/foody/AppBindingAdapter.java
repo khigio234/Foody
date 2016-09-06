@@ -2,7 +2,6 @@ package com.khigio234.pc.foody;
 
 import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.khigio234.pc.core.view.BaseRecyclerViewAdapter;
 
@@ -18,7 +17,6 @@ public class AppBindingAdapter {
         if (recyclerView.getAdapter() instanceof BaseRecyclerViewAdapter) {
             BaseRecyclerViewAdapter adapter = (BaseRecyclerViewAdapter) recyclerView.getAdapter();
             if (adapter != null) {
-                Log.d("TAG", "CCC");
                 adapter.setData(items);
             }
         }

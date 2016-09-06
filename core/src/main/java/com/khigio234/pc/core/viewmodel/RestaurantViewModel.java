@@ -95,7 +95,6 @@ public class RestaurantViewModel extends BaseViewModel {
     }
 
     private void loadRestaurant() {
-        Log.d("cc","ccc");
         mRestaurantCloudService.getRestaurants(0, 10, new ICallback<List<Restaurant>>() {
             @Override
             public void onResult(List<Restaurant> result) {

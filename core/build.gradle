@@ -43,4 +43,6 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     apt 'com.google.dagger:dagger-compiler:2.5'
     apt 'com.android.databinding:compiler:1.0-rc0'
+
+    compile 'com.birbit:android-priority-jobqueue:2.0.0'
 }

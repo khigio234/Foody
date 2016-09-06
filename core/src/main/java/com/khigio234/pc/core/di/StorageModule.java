@@ -12,7 +12,7 @@ import io.realm.Realm;
 /**
  * Created by PC on 8/2/2016.
  */
-@Module(includes = {AppModule.class})
+@Module
 public class StorageModule {
 
     //region Provide methods

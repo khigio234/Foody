@@ -16,7 +16,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="3dp"
             android:src="@drawable/ic_login_more"
             android:padding="10dp"/>
 

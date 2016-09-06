@@ -3,14 +3,23 @@ package com.khigio234.pc.core.viewmodel;
 import android.databinding.Bindable;
 import android.util.Log;
 
+import com.birbit.android.jobqueue.JobManager;
 import com.khigio234.pc.core.BR;
+import com.khigio234.pc.core.event.FetchedCategoryEvent;
+import com.khigio234.pc.core.job.BaseJob;
+import com.khigio234.pc.core.job.FetchCategoryJob;
 import com.khigio234.pc.core.model.entities.Category;
 import com.khigio234.pc.core.model.services.clouds.CategoryCloudService;
+import com.khigio234.pc.core.model.services.clouds.ICategoryService;
 import com.khigio234.pc.core.model.services.storages.CategoryModel;
-import com.khigio234.pc.core.view.ICallback;
 import com.khigio234.pc.core.view.INavigator;
 
-import java.util.List;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 
 /**
  * Created by PC on 8/4/2016.
@@ -21,27 +30,35 @@ public class CategoryViewModel extends BaseViewModel{
 
     private static final String TAG = "CategoryViewModel";
 
-    private List<Category> mCategories;
+    private RealmResults<Category> mCategories;
 
     private CategoryModel mCategoryModel;
 
     private CategoryCloudService mCategoryCloudService;
+
+    private ICategoryService mICategoryService;
+
+    private JobManager mJobManager;
 
     //endregion
 
     //region Getter and Setter
 
     @Bindable
-    public List<Category> getCategories() {
+    public RealmResults<Category> getCategories() {
         return mCategories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(RealmResults<Category> categories) {
         mCategories = categories;
 
         notifyPropertyChanged(BR.categories);
     }
 
+    @Override
+    protected EventBus getEventBus() {
+        return super.getEventBus();
+    }
 
     //endregion
 
@@ -50,11 +67,13 @@ public class CategoryViewModel extends BaseViewModel{
     /**
      * @param navigator Navigate controller.
      */
-    public CategoryViewModel(INavigator navigator, CategoryCloudService cloudService, CategoryModel categoryModel) {
+    public CategoryViewModel(INavigator navigator, CategoryCloudService categoryCloudService, CategoryModel categoryModel, JobManager jobManager, ICategoryService iCategoryService) {
         super(navigator);
 
-        mCategoryCloudService = cloudService;
+        mCategoryCloudService = categoryCloudService;
         mCategoryModel = categoryModel;
+        mJobManager = jobManager;
+        mICategoryService = iCategoryService;
     }
 
     protected CategoryViewModel() {
@@ -69,6 +88,10 @@ public class CategoryViewModel extends BaseViewModel{
     @Override
     public void onCreate() {
         super.onCreate();
+
+        getNavigator().showBusyIndicator("Loading...");
+
+        getEventBus().register(this);
 
         loadCategory();
     }
@@ -88,6 +111,8 @@ public class CategoryViewModel extends BaseViewModel{
         super.onDestroy();
 
         mCategories = null;
+
+        getEventBus().unregister(this);
     }
 
     //endregion
@@ -95,28 +120,36 @@ public class CategoryViewModel extends BaseViewModel{
     //region Private methods
 
     private void loadCategory(){
-        mCategoryCloudService.getAllCategories(new ICallback<List<Category>>() {
-            @Override
-            public void onResult(List<Category> result) {
-                Log.d(TAG, "DONE");
-                setCategories(result);
-                for (Category category: result) {
-                    Log.d(TAG, category.toString());
-                }
-            }
+        RealmResults<Category> categories = mCategoryModel.getAllCategories();
+        setCategories(categories);
+        getNavigator().hideBusyIndicator();
 
+        categories.addChangeListener(new RealmChangeListener<RealmResults<Category>>() {
             @Override
-            public void onFailure(Throwable t) {
-
+            public void onChange(RealmResults<Category> element) {
+                setCategories(element);
             }
         });
+
+        mJobManager.addJobInBackground(new FetchCategoryJob(BaseJob.UI_HIGH, mICategoryService, mCategoryModel));
     }
 
     //endregion
 
     //region Public methods
 
+    public void showRestaurantsByCategory(Category category) {
+        getEventBus().postSticky(category);
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(FetchedCategoryEvent fetchedCategoryEvent) {
+        if (fetchedCategoryEvent.isSuccess()) {
+            Log.d(TAG, "Fetched categories successfully!");
+        } else {
+            Log.d(TAG, "Fetched categories failed!");
+        }
+    }
 
     //endregion
 

@@ -38,7 +38,6 @@ public class RestaurantCloudService extends BaseCloudService<IRestaurantService>
                 if (apiResponse.isSuccess()) {
                     callback.onResult(apiResponse.getData());
 
-                    Log.d("TAG", apiResponse.getData().get(0).toString());
                 } else {
                     Log.d("TAG", apiResponse.getMessage());
                 }
@@ -59,7 +58,6 @@ public class RestaurantCloudService extends BaseCloudService<IRestaurantService>
                 if (apiResponse.isSuccess()) {
                     callback.onResult(apiResponse.getData());
 
-                    Log.d("TAG", apiResponse.getData().get(0).toString());
                 } else {
                     Log.d("TAG", apiResponse.getMessage());
                 }
@@ -87,7 +85,6 @@ public class RestaurantCloudService extends BaseCloudService<IRestaurantService>
                         syncHistory.setLastSyncTimestamp(apiResponse.getLastSyncTimestamp());
                         realm.commitTransaction();
 
-                        Log.d("TAG", apiResponse.getData().get(0).toString());
                     } else {
                         Log.d("TAG", apiResponse.getMessage());
                     }

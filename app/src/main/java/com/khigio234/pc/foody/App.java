@@ -2,6 +2,7 @@ package com.khigio234.pc.foody;
 
 import com.khigio234.pc.core.di.AppModule;
 import com.khigio234.pc.core.di.CloudModule;
+import com.khigio234.pc.core.di.JobModule;
 import com.khigio234.pc.core.di.StorageModule;
 import com.khigio234.pc.core.di.ViewModelModule;
 import com.khigio234.pc.core.view.BaseApplication;
@@ -41,6 +42,7 @@ public class App extends BaseApplication{
 
         sAppComponent = DaggerAppComponent.builder()
                 .appModule(appModule)
+                .jobModule(new JobModule())
                 .cloudModule(new CloudModule())
                 .storageModule(new StorageModule())
                 .viewModelModule(new ViewModelModule())

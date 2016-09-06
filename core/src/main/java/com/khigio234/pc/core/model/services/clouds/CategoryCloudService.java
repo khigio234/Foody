@@ -37,7 +37,6 @@ public class CategoryCloudService extends BaseCloudService<ICategoryService> {
                 if (apiResponse.isSuccess()) {
                     callback.onResult(apiResponse.getData());
 
-                    Log.d("TAG", apiResponse.getData().get(0).toString());
                 } else {
                     Log.d("TAG", apiResponse.getMessage());
                 }
@@ -66,7 +65,6 @@ public class CategoryCloudService extends BaseCloudService<ICategoryService> {
                         syncHistory.setLastSyncTimestamp(apiResponse.getLastSyncTimestamp());
                         realm.commitTransaction();
 
-                        Log.d("TAG", apiResponse.getData().get(0).toString());
                     } else {
                         Log.d("TAG", apiResponse.getMessage());
                     }
