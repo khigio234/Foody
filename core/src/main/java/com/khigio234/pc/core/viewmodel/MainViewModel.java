@@ -6,8 +6,6 @@ import com.khigio234.pc.core.BR;
 import com.khigio234.pc.core.model.entities.User;
 import com.khigio234.pc.core.view.INavigator;
 
-import org.greenrobot.eventbus.EventBus;
-
 /**
  * Created by PC on 8/2/2016.
  */
@@ -36,11 +34,6 @@ public class MainViewModel extends BaseViewModel{
         return super.getNavigator();
     }
 
-    @Override
-    protected EventBus getEventBus() {
-        return super.getEventBus();
-    }
-
     @Bindable
     public User getUser() {
         return mUser;
@@ -60,7 +53,7 @@ public class MainViewModel extends BaseViewModel{
     public void onCreate() {
         super.onCreate();
 
-        getEventBus().register(this);
+        register();
     }
 
     @Override
@@ -77,7 +70,7 @@ public class MainViewModel extends BaseViewModel{
     public void onDestroy() {
         super.onDestroy();
 
-        getEventBus().unregister(this);
+        unregister();
     }
 
 

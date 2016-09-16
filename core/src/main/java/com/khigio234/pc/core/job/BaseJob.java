@@ -52,11 +52,12 @@ public abstract class BaseJob extends Job{
         return true;
     }
 
-    protected EventBus getEventBus() {
-        if (mEventBus == null) {
-            mEventBus = EventBus.getDefault();
-        }
-        return mEventBus;
+    protected static final void post(Object object) {
+        EventBus.getDefault().post(object);
+    }
+
+    protected static final void postSticky(Object object) {
+        EventBus.getDefault().postSticky(object);
     }
 
     //endregion

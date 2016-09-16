@@ -75,7 +75,7 @@ public class RestaurantCloudService extends BaseCloudService<IRestaurantService>
 
         final SyncHistory syncHistory = realm.where(SyncHistory.class).equalTo("mNameTable","restaurants").findFirst();
         if (syncHistory != null) {
-            getICloudService().getNewRestaurants(offset, limit, syncHistory.getLastSyncTimestamp()).enqueue(new Callback<APIResponse<List<Restaurant>>>() {
+            getICloudService().getNewRestaurants(syncHistory.getLastSyncTimestamp()).enqueue(new Callback<APIResponse<List<Restaurant>>>() {
                 @Override
                 public void onResponse(Call<APIResponse<List<Restaurant>>> call, Response<APIResponse<List<Restaurant>>> response) {
                     APIResponse<List<Restaurant>> apiResponse = response.body();

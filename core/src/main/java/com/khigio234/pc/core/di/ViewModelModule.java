@@ -1,10 +1,10 @@
 package com.khigio234.pc.core.di;
 
 import com.birbit.android.jobqueue.JobManager;
-import com.khigio234.pc.core.model.services.clouds.CategoryCloudService;
 import com.khigio234.pc.core.model.services.clouds.ICategoryService;
-import com.khigio234.pc.core.model.services.clouds.RestaurantCloudService;
+import com.khigio234.pc.core.model.services.clouds.IRestaurantService;
 import com.khigio234.pc.core.model.services.storages.CategoryModel;
+import com.khigio234.pc.core.model.services.storages.RestaurantModel;
 import com.khigio234.pc.core.view.INavigator;
 import com.khigio234.pc.core.viewmodel.CategoryViewModel;
 import com.khigio234.pc.core.viewmodel.MainViewModel;
@@ -32,14 +32,14 @@ public class ViewModelModule {
 
     @Provides
     @Singleton
-    public CategoryViewModel providesCategoryViewModel(INavigator navigator, CategoryCloudService categoryCloudService, CategoryModel categoryModel, JobManager jobManager, ICategoryService iCategoryService) {
-        return new CategoryViewModel(navigator, categoryCloudService, categoryModel, jobManager, iCategoryService);
+    public CategoryViewModel providesCategoryViewModel(INavigator navigator, CategoryModel categoryModel, JobManager jobManager, ICategoryService iCategoryService) {
+        return new CategoryViewModel(navigator, categoryModel, jobManager, iCategoryService);
     }
 
     @Provides
     @Singleton
-    public RestaurantViewModel providesRestaurantViewModel(INavigator navigator, RestaurantCloudService restaurantCloudService) {
-        return new RestaurantViewModel(navigator, restaurantCloudService);
+    public RestaurantViewModel providesRestaurantViewModel(INavigator navigator, RestaurantModel restaurantModel, JobManager jobManager, IRestaurantService iRestaurantService) {
+        return new RestaurantViewModel(navigator, restaurantModel, jobManager, iRestaurantService);
     }
 
     //endregion

@@ -1,16 +1,30 @@
 package com.khigio234.pc.core.viewmodel;
 
 import android.databinding.Bindable;
+import android.databinding.ObservableArrayList;
 import android.util.Log;
 
+import com.birbit.android.jobqueue.JobManager;
 import com.khigio234.pc.core.BR;
+import com.khigio234.pc.core.event.FetchedRestaurantEvent;
+import com.khigio234.pc.core.job.BaseJob;
+import com.khigio234.pc.core.job.FetchRestaurantJob;
 import com.khigio234.pc.core.model.entities.Restaurant;
-import com.khigio234.pc.core.model.services.clouds.RestaurantCloudService;
+import com.khigio234.pc.core.model.responses.APIResponse;
+import com.khigio234.pc.core.model.services.Configuration;
+import com.khigio234.pc.core.model.services.clouds.IRestaurantService;
 import com.khigio234.pc.core.model.services.storages.RestaurantModel;
 import com.khigio234.pc.core.view.ICallback;
 import com.khigio234.pc.core.view.INavigator;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by PC on 8/16/2016.
@@ -21,11 +35,13 @@ public class RestaurantViewModel extends BaseViewModel {
 
     private static final String TAG = "RestaurantViewModel";
 
-    private List<Restaurant> mRestaurants;
+    private ObservableArrayList<Restaurant> mRestaurants;
 
     private RestaurantModel mRestaurantModel;
 
-    private RestaurantCloudService mRestaurantCloudService;
+    private IRestaurantService mIRestaurantService;
+
+    private JobManager mJobManager;
 
     //endregion
 
@@ -37,8 +53,8 @@ public class RestaurantViewModel extends BaseViewModel {
     }
 
     public void setRestaurants(List<Restaurant> restaurants) {
-        mRestaurants = restaurants;
-
+        mRestaurants = new ObservableArrayList<>();
+        mRestaurants.addAll(restaurants);
         notifyPropertyChanged(BR.restaurants);
     }
 
@@ -46,20 +62,12 @@ public class RestaurantViewModel extends BaseViewModel {
 
     //region Constructor
 
-    /*
-        Storage
-     */
-//    public RestaurantViewModel(INavigator navigator, RestaurantStorageService restaurantStorageService) {
-//        super(navigator);
-//        mRestaurantStorageService = restaurantStorageService;
-//    }
-
-    /*
-        Cloud
-     */
-    public RestaurantViewModel(INavigator navigator, RestaurantCloudService restaurantCloudService) {
+    public RestaurantViewModel(INavigator navigator, RestaurantModel restaurantModel, JobManager jobManager, IRestaurantService iRestaurantService) {
         super(navigator);
-        mRestaurantCloudService = restaurantCloudService;
+
+        mRestaurantModel = restaurantModel;
+        mJobManager = jobManager;
+        mIRestaurantService = iRestaurantService;
     }
 
     protected RestaurantViewModel() {
@@ -74,7 +82,9 @@ public class RestaurantViewModel extends BaseViewModel {
     public void onCreate() {
         super.onCreate();
 
-        loadRestaurant();
+        register();
+
+        loadLatestRestaurants();
     }
 
     @Override
@@ -89,20 +99,22 @@ public class RestaurantViewModel extends BaseViewModel {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        unregister();
 
-        mRestaurants = null;
+        super.onDestroy();
     }
 
-    private void loadRestaurant() {
-        mRestaurantCloudService.getRestaurants(0, 10, new ICallback<List<Restaurant>>() {
+    //endregion
+
+    //region Private method
+
+    private void loadLatestRestaurants() {
+
+        mRestaurantModel.getLatestRestaurantsAsync(new ICallback<List<Restaurant>>() {
             @Override
             public void onResult(List<Restaurant> result) {
-                Log.d(TAG, "Load Restaurant");
                 setRestaurants(result);
-                for (Restaurant restaurant: result) {
-                    Log.d(TAG, restaurant.toString());
-                }
+                Log.d(TAG, result.toString());
             }
 
             @Override
@@ -110,6 +122,45 @@ public class RestaurantViewModel extends BaseViewModel {
 
             }
         });
+
+        mJobManager.addJobInBackground(new FetchRestaurantJob(BaseJob.UI_HIGH, mIRestaurantService, mRestaurantModel));
+    }
+
+    //endregion
+
+    //region Public method
+
+    public void getNextPageRestaurants(long currentOffset) {
+        long nextOffset = currentOffset + 1;
+
+        mIRestaurantService.getRestaurants(nextOffset, Configuration.NUMBER_CACHE_RESTAURANTS).enqueue(new Callback<APIResponse<List<Restaurant>>>() {
+            @Override
+            public void onResponse(Call<APIResponse<List<Restaurant>>> call, Response<APIResponse<List<Restaurant>>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().isSuccess()) {
+                        mRestaurants.addAll(response.body().getData());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<List<Restaurant>>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //endregion
+
+    //region Subscribe
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(FetchedRestaurantEvent fetchedRestaurantEvent) {
+        if (fetchedRestaurantEvent.isSuccess()) {
+            setRestaurants(fetchedRestaurantEvent.getRestaurants());
+        } else {
+            Log.d(TAG, "Fetched restaurants failed!");
+        }
     }
 
     //endregion

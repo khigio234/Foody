@@ -28,7 +28,7 @@ android {
     }
     sourceSets {
         main {
-            res.srcDirs = ['src/main/res-main', 'src/main/res-screen/category', 'src/main/res-screen/home', 'src/main/res', 'src/main/res-screen/newsfeed', 'src/main/res-screen/more', 'src/main/res-screen/notification', 'src/main/res-screen/search', 'src/main/res-screen/login', 'src/main/res-screen/register']
+            res.srcDirs = ['src/main/res-main', 'src/main/res-screen/category', 'src/main/res-screen/home', 'src/main/res', 'src/main/res-screen/newsfeed', 'src/main/res-screen/more', 'src/main/res-screen/notification', 'src/main/res-screen/search', 'src/main/res-screen/login', 'src/main/res-screen/register', 'src/main/res-screen/detail-restaurant']
         }
     }
 }

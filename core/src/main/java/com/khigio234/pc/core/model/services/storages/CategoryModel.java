@@ -57,7 +57,7 @@ public class CategoryModel extends BaseModel {
         });
     }
 
-    public Date getLatestSychronizeTimestamp() {
+    public Date getLatestSynchronizeTimestamp() {
         Realm realm = Realm.getDefaultInstance();
 
         SyncHistory syncHistory = realm.where(SyncHistory.class).equalTo("mNameTable", CATEGORY_TABLE_NAME).findFirst();

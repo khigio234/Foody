@@ -19,7 +19,7 @@ public interface IRestaurantService {
     Call<APIResponse<List<Restaurant>>> getRestaurants(@Query("offset") long offset, @Query("limit") long limit);
 
     @GET("/foody_api_son/api/v1/restaurants")
-    Call<APIResponse<List<Restaurant>>> getNewRestaurants(@Query("offset")long offset, @Query("limit")long limit, @Query("last_sync_timestamp") Date lastSyncTimestamp);
+    Call<APIResponse<List<Restaurant>>> getNewRestaurants(@Query("last_sync_timestamp") Date lastSyncTimestamp);
 
     @GET("/foody_api_son/api/v1/restaurants")
     Call<APIResponse<List<Restaurant>>> getRestaurantsByCategory(@Query("category_id") int categoryId, @Query("offset") long offset, @Query("limit") long limit);

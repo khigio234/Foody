@@ -15,8 +15,6 @@ public abstract class BaseViewModel extends BaseObservable implements IViewModel
 
     private INavigator mNavigator;
 
-    private EventBus mEventBus;
-
     //endregion
 
     //region Getter and Setter
@@ -26,13 +24,6 @@ public abstract class BaseViewModel extends BaseObservable implements IViewModel
      */
     protected INavigator getNavigator() {
         return mNavigator;
-    }
-
-    protected EventBus getEventBus() {
-        if (mEventBus == null) {
-            mEventBus = EventBus.getDefault();
-        }
-        return mEventBus;
     }
 
     //endregion
@@ -72,6 +63,32 @@ public abstract class BaseViewModel extends BaseObservable implements IViewModel
     @Override
     public void onDestroy() {
 
+    }
+
+    //endregion
+
+    //region Protected method
+
+    protected final void register() {
+        EventBus eventBus = EventBus.getDefault();
+        if (!eventBus.isRegistered(this)) {
+            eventBus.register(this);
+        }
+    }
+
+    protected final void unregister() {
+        EventBus eventBus = EventBus.getDefault();
+        if (eventBus.isRegistered(this)) {
+            eventBus.unregister(this);
+        }
+    }
+
+    protected static final void post(Object object) {
+        EventBus.getDefault().post(object);
+    }
+
+    protected static final void postSticky(Object object) {
+        EventBus.getDefault().postSticky(object);
     }
 
     //endregion

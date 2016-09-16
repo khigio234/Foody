@@ -15,7 +15,6 @@ import com.khigio234.pc.core.model.services.storages.CategoryModel;
 import java.util.Date;
 import java.util.List;
 
-import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -30,9 +29,8 @@ public class FetchCategoryJob extends BaseJob {
 
     private CategoryModel mCategoryModel;
 
-    private Realm mRealm;
-
     private static final String TAG = "FetchCategoryJob";
+
     private static final String GROUP = "FetchCategoryJob";
 
     //endregion
@@ -60,7 +58,7 @@ public class FetchCategoryJob extends BaseJob {
     public void onRun() throws Throwable {
         Call<APIResponse<List<Category>>> call;
 
-        Date latestSynchronizeTimestamp = mCategoryModel.getLatestSychronizeTimestamp();
+        Date latestSynchronizeTimestamp = mCategoryModel.getLatestSynchronizeTimestamp();
 
         if (latestSynchronizeTimestamp != null) {
             call = mICategoryService.getNewCategories(latestSynchronizeTimestamp);
@@ -75,7 +73,7 @@ public class FetchCategoryJob extends BaseJob {
             if (apiResponse.isSuccess()) {
                 if (apiResponse.getData().size() > 0) {
                     mCategoryModel.handleFetchedCategories(apiResponse.getData(), apiResponse.getLastSyncTimestamp());
-                    getEventBus().post(new FetchedCategoryEvent(true));
+                    post(new FetchedCategoryEvent(true));
                     return;
                 }
             }

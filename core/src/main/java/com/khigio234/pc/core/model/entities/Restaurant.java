@@ -174,6 +174,10 @@ public class Restaurant extends RealmObject {
         mCategory = category;
     }
 
+    public boolean isDeleted() {
+        return mDeletedAt != null;
+    }
+
     //endregion
 
     //region Constructor
