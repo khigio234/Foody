@@ -2,6 +2,7 @@ package com.khigio234.pc.foody.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,25 +24,16 @@ public class NewsFeedFragment extends BaseNavigationFragment<FragmentNewsFeedBin
 
     //region Properties
 
-    public static final String ARG_INSTANCE = "com.khigio234.pc.foody";
-
     private NewsFeedListAdapter mNewsFeedListAdapter;
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     //endregion
 
     //region Constructor
 
-//    public static NewsFeedFragment newInstance(int instance) {
-//        Bundle args = new Bundle();
-//        args.putInt(ARG_INSTANCE, instance);
-//        NewsFeedFragment fragment = new NewsFeedFragment();
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
     public NewsFeedFragment() {
     }
-
 
     //endregion
 
@@ -72,6 +64,12 @@ public class NewsFeedFragment extends BaseNavigationFragment<FragmentNewsFeedBin
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mNewsFeedListAdapter);
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+            }
+        });
         return view;
     }
 

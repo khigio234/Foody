@@ -2,6 +2,7 @@ package com.khigio234.pc.core.viewmodel;
 
 import android.databinding.Bindable;
 
+import com.birbit.android.jobqueue.JobManager;
 import com.khigio234.pc.core.BR;
 import com.khigio234.pc.core.model.entities.User;
 import com.khigio234.pc.core.view.INavigator;
@@ -16,6 +17,8 @@ public class MainViewModel extends BaseViewModel{
     private static final String TAG = "MainViewModel";
 
     private User mUser;
+
+    private JobManager mJobManager;
 
     //endregion
 

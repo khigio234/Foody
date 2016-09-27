@@ -17,8 +17,6 @@ public abstract class BaseJob extends Job{
 
     //region Properties
 
-    private EventBus mEventBus;
-
     public static final int UI_HIGH = 10;
     public static final int BACKGROUND = 1;
 

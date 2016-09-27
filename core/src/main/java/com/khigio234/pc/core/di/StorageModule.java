@@ -2,6 +2,7 @@ package com.khigio234.pc.core.di;
 
 import com.khigio234.pc.core.model.services.storages.CategoryModel;
 import com.khigio234.pc.core.model.services.storages.RestaurantModel;
+import com.khigio234.pc.core.model.services.storages.UserModel;
 
 import javax.inject.Singleton;
 
@@ -34,6 +35,12 @@ public class StorageModule {
     @Singleton
     public RestaurantModel providesRestaurantStorageService(Realm realm) {
         return new RestaurantModel(realm);
+    }
+
+    @Provides
+    @Singleton
+    public UserModel providesUserStorageService(Realm realm) {
+        return new UserModel(realm);
     }
 
     //endregion

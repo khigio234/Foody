@@ -2,21 +2,22 @@ package com.khigio234.pc.core.job;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.birbit.android.jobqueue.Params;
 import com.birbit.android.jobqueue.RetryConstraint;
+import com.khigio234.pc.core.event.AddMoreRestaurantsEvent;
 import com.khigio234.pc.core.event.FetchedRestaurantEvent;
+import com.khigio234.pc.core.event.ReplaceRestaurantsEvent;
 import com.khigio234.pc.core.model.entities.Restaurant;
 import com.khigio234.pc.core.model.responses.APIResponse;
 import com.khigio234.pc.core.model.services.Configuration;
 import com.khigio234.pc.core.model.services.clouds.IRestaurantService;
 import com.khigio234.pc.core.model.services.storages.RestaurantModel;
+import com.khigio234.pc.core.util.QueryDate;
 
 import java.util.Date;
 import java.util.List;
 
-import retrofit2.Call;
 import retrofit2.Response;
 
 /**
@@ -30,25 +31,27 @@ public class FetchRestaurantJob extends BaseJob {
 
     private RestaurantModel mRestaurantModel;
 
-    public static final String TAG = "FetchRestaurantJob";
-
     public static final String GROUP = "FetchRestaurantJob";
+
+    private int mOffset = -1;
 
     //endregion
 
     //region Constructor
 
-    public FetchRestaurantJob(@BaseJob.Priority int priority, IRestaurantService iRestaurantService, RestaurantModel restaurantModel) {
+    public FetchRestaurantJob(@BaseJob.Priority int priority, int offset, IRestaurantService iRestaurantService, RestaurantModel restaurantModel) {
         super(new Params(priority).groupBy(GROUP).requireNetwork());
 
         mIRestaurantService = iRestaurantService;
 
         mRestaurantModel = restaurantModel;
+
+        mOffset = offset;
     }
 
     //endregion
 
-    //region Override methods
+    //region Override method
 
     @Override
     public void onAdded() {
@@ -57,38 +60,35 @@ public class FetchRestaurantJob extends BaseJob {
 
     @Override
     public void onRun() throws Throwable {
-        Call<APIResponse<List<Restaurant>>> call;
 
-        Date latestSynchronizeTimestamp = mRestaurantModel.getLatestSynchronizeTimestamp();
+        if (isFirstSync()) {
+            List<Restaurant> localResult = mRestaurantModel.getLatest();
+            if (localResult != null) {
+                post(new ReplaceRestaurantsEvent(localResult));
+            }
 
-        if (latestSynchronizeTimestamp != null) {
-            call = mIRestaurantService.getNewRestaurants(latestSynchronizeTimestamp);
-        } else {
-            call = mIRestaurantService.getRestaurants(0, Configuration.NUMBER_CACHE_RESTAURANTS);
-        }
+            Date lastSyncAt = mRestaurantModel.getLatestSynchronize();
+            List<Restaurant> fetchedRestaurants;
 
-        Response<APIResponse<List<Restaurant>>> response = call.execute();
-        if (response.isSuccessful()) {
-            APIResponse<List<Restaurant>> apiResponse = response.body();
-
-            if (apiResponse.isSuccess()) {
-                if (apiResponse.getData().size() > 0) {
-                    mRestaurantModel.handleFetchedRestaurant(apiResponse.getData(), apiResponse.getLastSyncTimestamp());
-                    List<Restaurant> restaurants = mRestaurantModel.getNewRestaurants();
-                    post(new FetchedRestaurantEvent(true, restaurants));
-                    return;
-                } else {
-                    Log.d(TAG, "There is nothing changed");
-                    return;
-                }
+            if (lastSyncAt != null) {
+                fetchedRestaurants = getSyncData(lastSyncAt);
             } else {
-                post(new FetchedRestaurantEvent(false));
-                return;
+                fetchedRestaurants = getMoreData(mOffset + 1);
+            }
+
+            if (fetchedRestaurants != null && fetchedRestaurants.size() > 0) {
+                syncRestaurants(fetchedRestaurants);
+                mRestaurantModel.saveLatestSynchronize(lastSyncAt);
+                List<Restaurant> newRestaurants = mRestaurantModel.getLatest();
+                post(new ReplaceRestaurantsEvent(newRestaurants));
             }
         } else {
-            post(new FetchedRestaurantEvent(false));
-            return;
+            List<Restaurant> moreRestaurants = getMoreData(mOffset);
+            if (moreRestaurants != null && moreRestaurants.size() > 0) {
+                post(new AddMoreRestaurantsEvent(moreRestaurants));
+            }
         }
+
     }
 
     @Override
@@ -106,7 +106,55 @@ public class FetchRestaurantJob extends BaseJob {
 
     @Override
     protected int getRetryLimit() {
-        return 5;
+        return 2;
+    }
+
+    //endregion
+
+    //region Private method
+
+    private boolean isFirstSync() {
+        return mOffset < 0;
+    }
+
+    private List<Restaurant> getSyncData(Date lastSyncAt) throws Throwable {
+
+        Response<APIResponse<List<Restaurant>>> response = mIRestaurantService.getNewRestaurants(new QueryDate(lastSyncAt)).execute();
+        if (response.isSuccessful()){
+
+            APIResponse<List<Restaurant>> apiResponse = response.body();
+
+            if (apiResponse != null && apiResponse.isSuccess()) {
+                List<Restaurant> syncRestaurants = apiResponse.getData();
+                return syncRestaurants;
+            }
+        }
+        return null;
+    }
+
+    private List<Restaurant> getMoreData(int offset) throws Throwable {
+
+        Response<APIResponse<List<Restaurant>>> response = mIRestaurantService.getRestaurants(offset, Configuration.NUMBER_RECORDS_PER_PAGE).execute();
+        if (response.isSuccessful()){
+
+            APIResponse<List<Restaurant>> apiResponse = response.body();
+
+            if (apiResponse != null && apiResponse.isSuccess()) {
+                return apiResponse.getData();
+            }
+        }
+        return null;
+    }
+
+    private void syncRestaurants(List<Restaurant> restaurants) {
+        for (Restaurant restaurant: restaurants) {
+            if (restaurant.isDeleted()) {
+                mRestaurantModel.delete(restaurant);
+            } else {
+                mRestaurantModel.addNewOrUpdate(restaurant);
+            }
+        }
+        mRestaurantModel.optimizeCached();
     }
 
     //endregion

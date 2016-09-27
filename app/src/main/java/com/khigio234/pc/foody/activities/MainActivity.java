@@ -6,7 +6,6 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.khigio234.pc.foody.R;
 import com.khigio234.pc.foody.fragments.BaseNavigationFragment;
@@ -108,8 +107,6 @@ public class MainActivity extends AppCompatActivity implements BaseNavigationFra
     @Override
     public void pushFragment(Fragment fragment) {
         mNavController.push(fragment);
-
-        Log.d("tt","ccc");
     }
 
 }
